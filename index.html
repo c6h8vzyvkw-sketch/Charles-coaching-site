@@ -1487,6 +1487,25 @@
     }
 
     .panel.is-open .panel-bg img{ filter: brightness(.5); }
+
+    /* ---- TÉMOIGNAGES : carrousel horizontal au doigt (mobile uniquement) ---- */
+    .quotes{
+      display: flex !important;
+      grid-template-columns: none !important;
+      overflow-x: auto; overflow-y: hidden;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      gap: 14px !important;
+      padding: 4px 24px 18px; margin-inline: -24px;
+      scroll-padding-left: 24px;
+      scrollbar-width: none;
+    }
+    .quotes::-webkit-scrollbar{ display: none; }
+    .quote{
+      grid-column: auto !important;
+      flex: 0 0 84% !important;
+      scroll-snap-align: start;
+    }
   }
 
   @media (prefers-reduced-motion: reduce){
