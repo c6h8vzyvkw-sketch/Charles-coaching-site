@@ -1451,5 +1451,80 @@
   }
 </script>
 
+<!-- ===== Accordéon mobile des parcours (≤ 860 px) ===== -->
+<style>
+  .panel-toggle{ display: none; }
+
+  @media (max-width: 860px){
+    .panel-toggle{
+      display: inline-flex; align-items: center; justify-content: center;
+      position: absolute; top: 20px; right: 20px; z-index: 4;
+      width: 46px; height: 46px; padding: 0;
+      border-radius: 50%; border: 1px solid rgba(245,239,228,.45);
+      background: rgba(14,47,46,.55);
+      -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+      color: #F5EFE4; font-size: 26px; font-weight: 300; line-height: 1;
+      cursor: pointer; -webkit-tap-highlight-color: transparent;
+      transition: transform .35s ease, background .3s ease, color .3s ease;
+    }
+    .panel-toggle:focus-visible{ outline: 2px solid #F5EFE4; outline-offset: 3px; }
+    .panel.is-open .panel-toggle{
+      transform: rotate(45deg);
+      background: rgba(245,239,228,.92); color: #0E2F2E;
+    }
+
+    /* Replié au repos — hauteur nulle, mais le texte reste dans la page */
+    .panel-desc, .panel-benefits{
+      max-height: 0 !important; opacity: 0 !important;
+      overflow: hidden !important; margin-top: 0 !important;
+      transition: max-height .45s ease, opacity .3s ease, margin-top .45s ease;
+    }
+    .panel.is-open .panel-desc{
+      max-height: 480px !important; opacity: 1 !important; margin-top: 14px !important;
+    }
+    .panel.is-open .panel-benefits{
+      max-height: 340px !important; opacity: 1 !important; margin-top: 18px !important;
+    }
+
+    .panel-bg img{ transition: filter .45s ease; }
+    .panel.is-open .panel-bg img{ filter: brightness(.5); }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .panel-desc, .panel-benefits, .panel-toggle, .panel-bg img{ transition: none !important; }
+  }
+</style>
+
+<script>
+(function () {
+  var panels = document.querySelectorAll('#objectifs article.panel');
+  Array.prototype.forEach.call(panels, function (panel) {
+    if (panel.querySelector('.panel-toggle')) return;
+
+    var label = panel.querySelector('.panel-label');
+    var nom = label ? label.textContent.trim() : 'ce parcours';
+
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'panel-toggle';
+    btn.setAttribute('aria-expanded', 'false');
+    btn.setAttribute('aria-label', 'Afficher le détail : ' + nom);
+    btn.innerHTML = '<span aria-hidden="true">+</span>';
+
+    // On ne gère pas l'ouverture nous-mêmes : le clic remonte au mécanisme
+    // d'accordéon déjà présent sur le site (ouverture exclusive d'un panneau).
+    // On se contente de tenir l'état accessible à jour.
+    var obs = new MutationObserver(function () {
+      var ouvert = panel.classList.contains('is-open');
+      btn.setAttribute('aria-expanded', ouvert ? 'true' : 'false');
+      btn.setAttribute('aria-label', (ouvert ? 'Masquer le détail : ' : 'Afficher le détail : ') + nom);
+    });
+    obs.observe(panel, { attributes: true, attributeFilter: ['class'] });
+
+    (panel.querySelector('.panel-inner') || panel).appendChild(btn);
+  });
+})();
+</script>
+
 </body>
 </html>
