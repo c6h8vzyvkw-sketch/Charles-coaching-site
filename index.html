@@ -1465,7 +1465,7 @@
       -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
       color: #F5EFE4; font-size: 26px; font-weight: 300; line-height: 1;
       cursor: pointer; -webkit-tap-highlight-color: transparent;
-      transition: transform .35s ease, background .3s ease, color .3s ease;
+      transition: background .3s ease, color .3s ease;
     }
     .panel-toggle:focus-visible{ outline: 2px solid #F5EFE4; outline-offset: 3px; }
     .panel.is-open .panel-toggle{
@@ -1477,7 +1477,7 @@
     .panel-desc, .panel-benefits{
       max-height: 0 !important; opacity: 0 !important;
       overflow: hidden !important; margin-top: 0 !important;
-      transition: max-height .45s ease, opacity .3s ease, margin-top .45s ease;
+      transition: opacity .3s ease;
     }
     .panel.is-open .panel-desc{
       max-height: 480px !important; opacity: 1 !important; margin-top: 14px !important;
@@ -1486,7 +1486,6 @@
       max-height: 340px !important; opacity: 1 !important; margin-top: 18px !important;
     }
 
-    .panel-bg img{ transition: filter .45s ease; }
     .panel.is-open .panel-bg img{ filter: brightness(.5); }
   }
 
